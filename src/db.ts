@@ -18,7 +18,13 @@ export function getClient(): Promise<MongoClient> {
       serverSelectionTimeoutMS: 10_000,
       maxPoolSize: 10,
     });
-    clientPromise = client.connect();
+    // A rejected promise must not be cached: serverless runtimes reuse the
+    // module between invocations, so a failed first attempt would poison the
+    // function for its whole lifetime.
+    clientPromise = client.connect().catch((error) => {
+      clientPromise = null;
+      throw error;
+    });
   }
 
   return clientPromise;
