@@ -1,6 +1,8 @@
-# BookNook API
+﻿# BookNook API
 
 Express 5 + MongoDB API for the BookNook library app.
+
+Live: <https://booknook-api.vercel.app> — `GET /books` returns the seeded shelf.
 
 ## Scripts
 
